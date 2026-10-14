@@ -1,0 +1,41 @@
+# Python 缓存与构建产物
+__pycache__/
+*.py[cod]
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# 虚拟环境与本地工具目录
+.venv/
+venv/
+env/
+.tools/
+
+# 工具缓存
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# 编辑器 / 操作系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Office 临时锁文件
+~$*.docx
+~$*.xlsx
+
+# 临时文件
+*.tmp
+*.log
+.piptmp*/
+
+# 报表运行产物（样例原始数据与已生成的示例报表仍然入库，见下）
+output/*.xlsx
+!output/report.xlsx

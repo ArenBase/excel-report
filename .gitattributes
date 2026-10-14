@@ -1,0 +1,24 @@
+# 统一换行符为 LF，避免 Windows 下 git 因自动换行转换产生虚假 diff
+# 说明：仓库内所有文本文件（源码/文档/配置）以 LF 存储；
+#       xlsx 等二进制文件显式标记为 binary，不做任何转换。
+* text=auto eol=lf
+
+*.py    text eol=lf
+*.md    text eol=lf
+*.toml  text eol=lf
+*.txt   text eol=lf
+*.json  text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.cfg   text eol=lf
+*.ini   text eol=lf
+
+# 二进制：禁止换行转换与文本 diff
+*.xlsx  binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.db    binary
