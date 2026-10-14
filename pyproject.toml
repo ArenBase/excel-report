@@ -1,0 +1,84 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "excel-report"
+version = "1.0.0"
+description = "考题一：读取 sales_raw.xlsx，清洗统计后生成含四个工作表的 report.xlsx"
+readme = "README.md"
+# 考核要求 Python >= 3.10；Ruff 会据此自动推断 target-version（见调研报告 §1.1）
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "被考核者" }]
+keywords = ["excel", "pandas", "openpyxl", "report", "data-cleaning"]
+
+# 依赖收敛：只用考核允许清单内的库，不引入 xlsxwriter / polars / pandera（见调研报告 §2）
+# python-dateutil 用于解析 "2024/3/15" 这类非补零日期写法；它本身也是 pandas 的依赖
+dependencies = [
+    "pandas>=2.0",
+    "openpyxl>=3.1",
+    "python-dateutil>=2.8",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "ruff>=0.6",
+]
+
+[project.scripts]
+excel-report = "excel_report.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# ---------------------------------------------------------------------------
+# Ruff 配置：单点配置，不放置子目录 ruff.toml（Ruff 不合并多份配置）
+# target-version 由 requires-python 自动推断，无需手写
+# ---------------------------------------------------------------------------
+[tool.ruff]
+line-length = 88
+indent-width = 4
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "SIM", # flake8-simplify
+    "C4",  # flake8-comprehensions
+    "RET", # flake8-return
+    "PTH", # flake8-use-pathlib
+    "RUF", # ruff-specific
+]
+ignore = [
+    "E501",   # 行宽由 formatter 负责
+    "RUF001", # 中文标点（全角括号/逗号）在中文注释与文案中是刻意使用的
+    "RUF002",
+    "RUF003",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+# ---------------------------------------------------------------------------
+# pytest 配置
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+addopts = "-ra --strict-markers -p no:cacheprovider"
+filterwarnings = ["error::DeprecationWarning"]

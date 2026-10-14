@@ -1,0 +1,7 @@
+# 运行时依赖（与 pyproject.toml 保持一致，便于无构建环境兜底安装）
+# 安装: pip install -r requirements.txt
+pandas>=2.0
+openpyxl>=3.1
+python-dateutil>=2.8
+
+# 开发/质量工具（非运行依赖）: pip install -r requirements.txt pytest ruff
